@@ -8,7 +8,19 @@
 </head>
 <body>
     <!-- 
-        
+        后端通过设置头解决跨域： 常用头如下：
+        1.设置哪个源可以访问我（如果用*，表示全部，但是就不能与4公用）
+            setHeader('Access-Control-Allow-Origin',['baidu.com','jd.com'])
+        2.允许携带那个头访问我（这里携带name）
+            setHeader('Access-Control-Allow-Headers','name' )
+        3.允许那个方法访问我（put）
+            setHeader('Access-Control-Allow-Methods', 'put')
+        4.允许携带cookie
+            setHeader('Access-Control-Allow-Credentials',true)
+        5.预检的存活时间
+            setHeader('Access-Control-Allow-Max-Age',6000) 
+        6.允许前端获取那个头(这里name)
+            setHeader('Access-Control-Expose-Header','name')
      -->
 </body>
 </html>
