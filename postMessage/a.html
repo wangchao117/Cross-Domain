@@ -7,6 +7,20 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <iframe src="./b.html" 
+        id='frame'
+        onload="load()"    
+        frameborder="0"></iframe>
+    <script>
+        function load() {
+            let frame = document.getElementById('frame');
+            // 向b发送消息
+            frame.contentWindow.postMessage('hahahah', 'http://192.168.66.165:8080/b.html')
+            // 接受b发的消息
+             window.onmessage = function(e) {
+                 console.log(e.data)
+             }
+        }
+    </script>
 </body>
 </html>

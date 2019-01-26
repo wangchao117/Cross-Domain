@@ -7,6 +7,12 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <script>
+        window.onmessage = function(e) {
+            console.log(e.data)
+            // b想a发
+            e.source.send('oooooo', e.origin)
+        }
+    </script>
 </body>
 </html>
