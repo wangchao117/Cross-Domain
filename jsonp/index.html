@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- src里面的链接不受跨域限制，jsonp就是靠这个跨域 -->
+    <!-- 
+        百度搜索实现：
+        https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=key&cb=callback
+        这个链接返回的是callback这个函数，里面的参数就是我们要的搜索结果
+    -->
+    
+    <!-- 第一步，在js调用callback，拿到结果(关键字写死的'key') -->
+    <!-- <script>
+        function callback(res) {
+            console.log(res)
+        }
+        callback()
+    </script>
+    <script src="https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=key&cb=callback"></script> -->
+
+    <!-- 第二部，封装jsonp -->
+    <script>
+        function jsonp({url, params, cb}) {
+            return new Promise((resolve, reject) => {
+                // 成功全局下申明函数
+                window[cb] = function(res) {
+                    resolve(res);
+                    // 调用结束数据拿到后删除页面的jsonp创造的script标签
+                    document.body.remove(script);
+                }
+                // 解析params, 将cb融进去
+                params = {...params, cb};  
+                // 要变成 [wd=哈哈,cb=show]
+                let arr = [];
+                for (let key in params) {
+                    arr.push(`${key}=${params[key]}`);
+                }
+                // 生成script标签
+                let script = document.createElement('script');
+                // 数组的join方法
+                script.src = `${url}?${arr.join('&')}`;
+                document.body.appendChild(script);
+            })
+        }
+        jsonp({
+            url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+            params: {
+                wd: 'haha'
+            },
+            cb: 'show'
+        }).then((res) => {
+            console.log(res)
+        })
+
+        // jsonp的缺点： 只能发送Get请求，因为参数是拼接到src上，同时也不安全，容易被攻击，如xss，万一被塞一个恶意脚本，就尴尬了
+    </script>
+</body>
+</html>
