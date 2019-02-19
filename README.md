@@ -16,9 +16,4 @@
     6.localion.hash
     7.http-proxy(代理)
     8.nginx
-    9.websocket
- 
-
-
-
-    ha ha ha ha ha h h h
+    9.websocket 
